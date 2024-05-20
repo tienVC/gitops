@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-          APP_NAME = "lab-cd"
+                  APP_NAME = "lab_cicd"
     }
     stages {
          stage("Cleanup Workspace") {
