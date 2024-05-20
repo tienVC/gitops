@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-                  APP_NAME = "lab_cicd"
+                  APP_NAME = "multi-client"
     }
     stages {
          stage("Cleanup Workspace") {
@@ -14,15 +14,15 @@ pipeline {
                      git branch: 'main', credentialsId: 'github', url: 'https://github.com/tienVC/gitops'
              }
          }
-         // stage("Update the Deployment Tags") {
-         //    steps {
-         //        sh """
-         //            cat deployment.yaml
-         //            sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yaml
-         //            cat deployment.yaml
-         //        """
-         //    }
-         // }
+         stage("Update the Deployment Tags") {
+            steps {
+                sh """
+                    cat client-deployment.yml
+                    sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yaml
+                    cat client-deployment.yml
+                """
+            }
+         }
          stage("Push the changed deployment file to GitHub") {
             steps {
                 sh """
